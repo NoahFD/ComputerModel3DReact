@@ -44,9 +44,12 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-800">
-      <ChatContainer messages={messages} />
-      <ChatForm onSend={handleSend} />
+    <div>
+      <div className="flex flex-col h-80 w-100 bg-transparent">
+        {/*<div className="flex flex-col h-full w-full bg-gray-800">*/}
+        <ChatContainer messages={messages} />
+        <ChatForm onSend={handleSend} />
+      </div>
     </div>
   );
 };
