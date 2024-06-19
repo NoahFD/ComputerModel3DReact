@@ -1,26 +1,18 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Html, useGLTF } from "@react-three/drei";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import ChatBot from "@/components/ChatBot.jsx";
 import WelcomeHtml from "@/components/WelcomeHtml.jsx";
 import store from "@/redux/store.js";
-import App from "@/App.jsx";
 
 export const ComputerModel = forwardRef(
   ({ HtmlContent, htmlScale, onInteractionStart, onInteractionEnd }, ref) => {
-    // Adjust delay to ensure second text starts after the first
     const { nodes, materials } = useGLTF("/old_computer.glb");
     const handlePointerDown = (event) => {
       event.stopPropagation();
       onInteractionStart();
     };
-    const zoom = useSelector((state) => state.appReducer.zoom);
     const showChatBot = useSelector((state) => state.appReducer.started);
-    const dispatch = useDispatch();
-
-    // Log the state to check it
-    console.log("Zoom:", zoom);
-    console.log("Show ChatBot:", showChatBot);
     const handlePointerUp = (event) => {
       event.stopPropagation();
       onInteractionEnd();

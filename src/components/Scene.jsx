@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import "@/App.css";
 import { ComputerModel } from "@/components/ComputerModel.jsx";
@@ -17,10 +17,6 @@ export default function Scene() {
   const zoom = useSelector((state) => state.appReducer.zoom);
   const showChatBot = useSelector((state) => state.appReducer.started);
   const targetZoom = useRef(camera.zoom);
-
-  // Log the state to check it
-  console.log("Zoom:", zoom);
-  console.log("Show ChatBot:", showChatBot);
 
   useEffect(() => {
     if (screenRef.current && controlsRef.current) {
@@ -123,8 +119,8 @@ export default function Scene() {
         ref={controlsRef}
         enablePan={false}
         enableZoom={true}
-        minDistance={10}
-        maxDistance={100}
+        minDistance={40}
+        maxDistance={200}
         minPolarAngle={Math.PI / 2.2}
         maxPolarAngle={Math.PI / 2.2}
         enableDamping={true}
