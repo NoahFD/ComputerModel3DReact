@@ -6,7 +6,7 @@ import WelcomeHtml from "@/components/WelcomeHtml.jsx";
 import store from "@/redux/store.js";
 
 export const ComputerModel = forwardRef(
-  ({ HtmlContent, htmlScale, onInteractionStart, onInteractionEnd }, ref) => {
+  ({ htmlScale, onInteractionStart, onInteractionEnd }, ref) => {
     const { nodes, materials } = useGLTF("/old_computer.glb");
     const handlePointerDown = (event) => {
       event.stopPropagation();

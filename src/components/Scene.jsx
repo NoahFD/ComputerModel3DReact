@@ -5,8 +5,6 @@ import { ComputerModel } from "@/components/ComputerModel.jsx";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { useThree } from "react-three-fiber";
 import * as THREE from "three";
-import WelcomeHtml from "@/components/WelcomeHtml.jsx";
-import ChatBot from "@/components/ChatBot.jsx";
 import { useSelector } from "react-redux";
 import SpotAndPointLightComponent from "@/components/SpotAndPointLightComponent.jsx";
 
@@ -108,7 +106,6 @@ export default function Scene() {
 
       <Suspense fallback={null}>
         <ComputerModel
-          HtmlContent={showChatBot ? <ChatBot /> : <WelcomeHtml />}
           htmlScale={showChatBot ? [0.2, 0.2, 0.8] : [0.3, 0.3, 0.8]}
           ref={screenRef}
           onInteractionStart={handleInteractionStart}
