@@ -8,9 +8,8 @@ const WelcomeHtml = () => {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Enter") {
-        // dispatch(start());
-        // dispatch(zoom());
-        // onStart();
+        dispatch(start());
+        dispatch(zoom());
       }
     };
 
@@ -32,9 +31,8 @@ const WelcomeHtml = () => {
         <div className="group">
           <button
             onClick={() => {
-              // dispatch(start());
-              // dispatch(zoom());
-              // onStart();
+              dispatch(start());
+              dispatch(zoom());
             }}
             className="group-hover:animate-none animate-blink bg-terminalGreenDark hover:bg-terminalGreen text-green-950 hover:text-green-50 font-bold py-2 px-4 rounded shadow-lg text-lg m-4"
           >

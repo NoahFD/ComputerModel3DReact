@@ -1,5 +1,10 @@
 import React, { forwardRef } from "react";
 import { Html, useGLTF } from "@react-three/drei";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import ChatBot from "@/components/ChatBot.jsx";
+import WelcomeHtml from "@/components/WelcomeHtml.jsx";
+import store from "@/redux/store.js";
+import App from "@/App.jsx";
 
 export const ComputerModel = forwardRef(
   ({ HtmlContent, htmlScale, onInteractionStart, onInteractionEnd }, ref) => {
@@ -9,7 +14,13 @@ export const ComputerModel = forwardRef(
       event.stopPropagation();
       onInteractionStart();
     };
+    const zoom = useSelector((state) => state.appReducer.zoom);
+    const showChatBot = useSelector((state) => state.appReducer.started);
+    const dispatch = useDispatch();
 
+    // Log the state to check it
+    console.log("Zoom:", zoom);
+    console.log("Show ChatBot:", showChatBot);
     const handlePointerUp = (event) => {
       event.stopPropagation();
       onInteractionEnd();
@@ -179,26 +190,6 @@ export const ComputerModel = forwardRef(
           position={[0, 3.024, 1.749]}
           rotation={[Math.PI / 2, 0, 0]}
         />
-        {/*<mesh*/}
-        {/*  castShadow*/}
-        {/*  receiveShadow*/}
-        {/*  geometry={nodes.ScreenInner.geometry}*/}
-        {/*  material={materials.Black}*/}
-        {/*  position={[0, 3.024, 1.749]}*/}
-        {/*  rotation={[Math.PI / 2, 0, 0]}*/}
-        {/*>*/}
-        {/*  <Html*/}
-        {/*    castShadow*/}
-        {/*    receiveShadow*/}
-        {/*    occlude*/}
-        {/*    transform*/}
-        {/*    rotation={[Math.PI / 2, Math.PI, Math.PI]}*/}
-        {/*    position={[0, 0.01, 0]} // Adjust this as needed to fit the screen*/}
-        {/*    scale={htmlScale} // Adjust this as needed to fit the screen*/}
-        {/*  >*/}
-        {/*    {HtmlContent}*/}
-        {/*  </Html>*/}
-        {/*</mesh>*/}
         <mesh
           ref={ref}
           castShadow
@@ -219,7 +210,9 @@ export const ComputerModel = forwardRef(
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
           >
-            {HtmlContent}
+            <Provider store={store}>
+              {showChatBot ? <ChatBot /> : <WelcomeHtml />}
+            </Provider>
           </Html>
         </mesh>
         <mesh

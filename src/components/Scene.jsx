@@ -1,5 +1,5 @@
-import React, { Suspense, useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import React, { Suspense, useEffect, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import "@/App.css";
 import { ComputerModel } from "@/components/ComputerModel.jsx";
 import { Environment, OrbitControls } from "@react-three/drei";
@@ -10,12 +10,13 @@ import ChatBot from "@/components/ChatBot.jsx";
 import { useSelector } from "react-redux";
 import SpotAndPointLightComponent from "@/components/SpotAndPointLightComponent.jsx";
 
-export default function Scene({ handleStartClick }) {
+export default function Scene() {
   const controlsRef = useRef();
   const screenRef = useRef();
   const { camera } = useThree();
   const zoom = useSelector((state) => state.appReducer.zoom);
   const showChatBot = useSelector((state) => state.appReducer.started);
+  const targetZoom = useRef(camera.zoom);
 
   // Log the state to check it
   console.log("Zoom:", zoom);
@@ -34,10 +35,20 @@ export default function Scene({ handleStartClick }) {
 
   useEffect(() => {
     if (zoom === 2) {
-      camera.zoom = 2;
+      targetZoom.current = 2;
+    }
+  }, [zoom]);
+
+  useFrame(() => {
+    if (controlsRef.current) {
+      controlsRef.current.update();
+    }
+    // Smoothly interpolate camera zoom
+    if (camera.zoom !== targetZoom.current) {
+      camera.zoom = THREE.MathUtils.lerp(camera.zoom, targetZoom.current, 0.1);
       camera.updateProjectionMatrix();
     }
-  }, [zoom, camera]);
+  });
 
   const handleInteractionStart = () => {
     if (controlsRef.current) {
@@ -64,17 +75,8 @@ export default function Scene({ handleStartClick }) {
         castShadow
         position={[16 * 5, 10 * 5, 4]}
         intensity={1.3}
-        // shadow-mapSize-width={1024}
-        // shadow-mapSize-height={1024}
-        // shadow-camera-far={50 * 8}
-        // shadow-camera-left={-10}
-        // shadow-camera-right={10}
-        // shadow-camera-top={10}
-        // shadow-camera-bottom={-10}
       />
-      {/*<pointLight position={[-10, -10, -10]} intensity={0.3} />*/}
       <Environment preset="night" />
-      {/* First Light Combination */}
       <SpotAndPointLightComponent
         spotLightProps={{
           position: [-5.5779 * 5, 0, 13.835 * 5],
@@ -91,8 +93,6 @@ export default function Scene({ handleStartClick }) {
           color: "#00FFFF",
         }}
       />
-
-      {/* Second Light Combination */}
       <SpotAndPointLightComponent
         spotLightProps={{
           position: [-7.7944 * 10, 8.4728 * 10, 8.0389 * 10],
@@ -123,12 +123,12 @@ export default function Scene({ handleStartClick }) {
         ref={controlsRef}
         enablePan={false}
         enableZoom={true}
-        minDistance={1}
+        minDistance={40}
         maxDistance={100}
         minPolarAngle={Math.PI / 2.2}
         maxPolarAngle={Math.PI / 2.2}
-        enableDamping={true} // Enable damping (smooth scrolling)
-        dampingFactor={0.1} // Adjust damping factor for smoothness
+        enableDamping={true}
+        dampingFactor={0.1}
       />
     </>
   );
