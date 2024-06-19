@@ -123,7 +123,7 @@ export default function Scene() {
         ref={controlsRef}
         enablePan={false}
         enableZoom={true}
-        minDistance={40}
+        minDistance={10}
         maxDistance={100}
         minPolarAngle={Math.PI / 2.2}
         maxPolarAngle={Math.PI / 2.2}
