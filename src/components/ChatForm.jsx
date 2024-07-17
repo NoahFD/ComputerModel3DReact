@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import send from "@/assets/send.svg";
 
 const ChatForm = ({ onSend }) => {

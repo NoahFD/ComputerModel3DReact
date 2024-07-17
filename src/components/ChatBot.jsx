@@ -23,11 +23,12 @@ const ChatBot = () => {
 
     try {
       const response = await api.post("/", { prompt });
+      console.log(response);
       const { data } = response;
-
+      console.log(data);
       const newBotMessage = {
         ...botMessage,
-        text: data.bot.trim(),
+        text: data.content.trim(),
       };
       setMessages((prev) =>
         prev.map((msg) => (msg.id === botMessage.id ? newBotMessage : msg)),
