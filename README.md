@@ -14,8 +14,8 @@ This is a React application bootstrapped with Vite and with React Three Fiber fo
 1. **Clone the repository:**
 
    ```bash
-   git clone <repository_url>
-   cd <repository_directory>
+   git clone https://github.com/NoahFD/ComputerModel3DReact.git
+   cd ComputerModel3DReact
    ```
 
 2. **Install dependencies:**
@@ -34,7 +34,13 @@ This is a React application bootstrapped with Vite and with React Three Fiber fo
 
 ### Running the Application
 
-To start the development server, use the following command:
+1) configure environment variables, create a `.env` file in the root directory. For example:
+
+```env
+VITE_API_URL=https://api.example.com
+```
+
+2)  start the development server, use the following command:
 
 Using npm:
 
